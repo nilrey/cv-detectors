@@ -1,0 +1,18 @@
+# core
+numpy
+scipy
+opencv-python
+pydantic
+pyyaml
+tqdm
+
+# detection / tracking
+torch
+torchvision
+ultralytics
+transformers
+timm
+boxmot
+
+# logging (optional at runtime)
+clearml

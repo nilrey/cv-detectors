@@ -1,0 +1,51 @@
+detector:
+  name: yolo
+  params:
+    weights: weights/yolo/yolov8x.pt
+    device: auto
+    conf: 0.25
+    iou: 0.5
+
+tracker:
+  name: botsort
+  params:
+    track_high_thresh: 0.5
+    track_low_thresh: 0.1
+    new_track_thresh: 0.6
+    max_lost_frames: 30
+    match_thresh: 0.8
+    proximity_thresh: 0.5
+    appearance_thresh: 0.25
+    with_reid: false
+    reid_weights: weights/trackers/osnet_x0_25_msmt17.pt
+
+classes: []  # пусто = все COCO
+
+input:
+  source: null
+
+output:
+  base_dir: data/output
+  video_dir: outputs/video
+  json_dir: outputs/json
+
+logging:
+  local: true
+  clearml:
+    enabled: false
+    project_name: cv-pipeline
+
+drawing:
+  show_bbox: true
+  show_roi: false
+  show_label: true
+  colors:
+    bbox: [0, 255, 0]
+    roi: [255, 128, 0]
+    label: [255, 255, 255]
+
+pipeline:
+  save_video: true
+  save_json: true
+  save_jsonl: true
+  json_format: full

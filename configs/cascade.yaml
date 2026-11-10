@@ -1,0 +1,56 @@
+detector:
+  name: cascade
+  params:
+    segmenter:
+      name: unet
+      params:
+        weights: weights/cascade/unet_roi.pt
+        device: auto
+        conf: 0.5
+    inner:
+      name: yolo
+      params:
+        weights: weights/yolo/yolov8x.pt
+        device: auto
+        conf: 0.25
+        iou: 0.5
+    roi_padding: 8
+    min_roi_area: 64
+
+tracker:
+  name: iou
+  params:
+    iou_threshold: 0.3
+    max_age: 30
+    min_hits: 3
+
+classes: []
+
+input:
+  source: null
+
+output:
+  base_dir: data/output
+  video_dir: outputs/video
+  json_dir: outputs/json
+
+logging:
+  local: true
+  clearml:
+    enabled: false
+    project_name: cv-pipeline
+
+drawing:
+  show_bbox: true
+  show_roi: true
+  show_label: true
+  colors:
+    bbox: [0, 255, 0]
+    roi: [255, 128, 0]
+    label: [255, 255, 255]
+
+pipeline:
+  save_video: true
+  save_json: true
+  save_jsonl: true
+  json_format: full

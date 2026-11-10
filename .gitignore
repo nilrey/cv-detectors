@@ -1,0 +1,32 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# outputs
+outputs/
+runs/
+*.mp4
+*.avi
+*.json
+*.jsonl
+
+# data / weights
+data/input/*
+!data/input/.gitkeep
+data/output/*
+!data/output/.gitkeep
+weights/**/*
+!weights/**/.gitkeep
+models/
+
+# clearml
+clearml.conf
+.clearml/
+
+# ide
+.idea/
+.vscode/
+.DS_Store

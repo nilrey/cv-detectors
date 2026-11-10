@@ -1,0 +1,29 @@
+# powershel
+# папки
+# -Force создает папки при необходимости и перезаписывает пустые файлы; существующие с содержимым не тронет (создаст заново только если уже есть — перезапишет; 
+# если файлы уже с кодом, лучше запускать до вставки содержимого).
+
+New-Item -ItemType Directory -Force -Path configs | Out-Null
+New-Item -ItemType Directory -Force -Path src, src\config, src\domain, src\detectors, src\trackers, src\io, src\logging, src\pipeline, src\api, tests | Out-Null
+New-Item -ItemType Directory -Force -Path src\config, src\domain, src\detectors, src\trackers, src\io, src\logging, src\pipeline, src\api, tests | Out-Null
+
+# корневые файлы
+New-Item -ItemType File -Force -Path requirements.txt, .gitignore, Dockerfile, main.py, README.md | Out-Null
+
+# configs
+New-Item -ItemType File -Force -Path configs\default.yaml, configs\cascade.yaml | Out-Null
+
+# src/__init__.py и пакеты
+New-Item -ItemType File -Force -Path src\__init__.py | Out-Null
+New-Item -ItemType File -Force -Path src\config\__init__.py, src\config\schema.py, src\config\loader.py | Out-Null
+New-Item -ItemType File -Force -Path src\domain\__init__.py, src\domain\models.py, src\domain\coco.py | Out-Null
+New-Item -ItemType File -Force -Path src\detectors\__init__.py, src\detectors\base.py, src\detectors\yolo.py, src\detectors\detr.py, src\detectors\cascade.py | Out-Null
+New-Item -ItemType File -Force -Path src\trackers\__init__.py, src\trackers\base.py, src\trackers\iou.py, src\trackers\botsort.py, src\trackers\yolo_track.py | Out-Null
+New-Item -ItemType File -Force -Path src\io\__init__.py, src\io\video_reader.py, src\io\video_writer.py, src\io\json_writer.py | Out-Null
+New-Item -ItemType File -Force -Path src\logging\__init__.py, src\logging\base.py, src\logging\local.py, src\logging\clearml.py | Out-Null
+New-Item -ItemType File -Force -Path src\pipeline\__init__.py, src\pipeline\runner.py, src\pipeline\drawing.py | Out-Null
+New-Item -ItemType File -Force -Path src\api\__init__.py, src\api\app.py, src\api\schemas.py | Out-Null
+New-Item -ItemType File -Force -Path src\factories.py | Out-Null
+
+# tests
+New-Item -ItemType File -Force -Path tests\__init__.py, tests\test_smoke.py | Out-Null
