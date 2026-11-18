@@ -1,0 +1,47 @@
+# Res-DETR settings
+detector:
+  name: detr
+  params:
+    weights: facebook/detr-resnet-50
+    device: auto
+    threshold: 0.5
+
+# Res-DETR settings
+tracker:
+  name: iou
+  params:
+    iou_threshold: 0.3
+    max_age: 30
+    min_hits: 1
+
+
+classes: []  # пусто = все COCO
+
+input:
+  source: null
+
+output:
+  base_dir: data/output
+  video_dir: outputs/video
+  json_dir: outputs/json
+
+logging:
+  local: true
+  clearml:
+    enabled: false
+    project_name: cv-pipeline
+
+drawing:
+  show_bbox: true
+  show_roi: false
+  show_label: true
+  colors:
+    bbox: [0, 255, 0]
+    roi: [255, 128, 0]
+    label: [255, 255, 255]
+
+pipeline:
+  save_video: true
+  save_json: true
+  save_jsonl: true
+  json_format: full

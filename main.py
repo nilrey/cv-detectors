@@ -30,7 +30,7 @@ def _build_params(config_path: str) -> tuple[RuntimeParams, object]:
 
 
 def main() -> None:
-    config_path = str(Path("configs/default.yaml"))
+    config_path = str(Path("configs/detr.yaml"))
     params, config = _build_params(config_path)
     batch = asyncio.run(run(params, config))
     print("result:")
