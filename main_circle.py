@@ -9,12 +9,12 @@ from src.config.schema import ClearMLRuntime, RuntimeParams
 from src.pipeline.runner import run
 
 CONFIGS = [
-    # "configs/rtdetr_r18vd.yaml",
-    # "configs/rtdetr_r34vd.yaml",
+    "configs/rtdetr_r18vd.yaml",
+    "configs/rtdetr_r34vd.yaml",
     "configs/rtdetr_r50vd.yaml",
     "configs/rtdetr_r50vd_coco_o365.yaml",
     "configs/detr-resnet-50-dc5.yaml",
-    # "configs/detr-resnet-50.yaml",
+    "configs/detr-resnet-50.yaml",
     "configs/rtdetr_r101.yaml",
     "configs/rtdetr_r101vd_coco_o365.yaml",
     "configs/detr-resnet-101-dc5.yaml",

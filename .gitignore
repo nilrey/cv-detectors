@@ -12,6 +12,7 @@ runs/
 *.avi
 *.json
 *.jsonl
+*.png
 
 # data / weights
 data/input/*

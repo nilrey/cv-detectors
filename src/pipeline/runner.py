@@ -185,6 +185,7 @@ async def run(params: RuntimeParams, config: AppConfig) -> BatchResult:
         if local is not None:
             local.start_video(source)
             local.event("video_start", source=source)
+            local.event("detector", det=detector.name, weights=Path(weights).name)
         try:
             vr = await _process_video(
                 source, params, config, detector, tracker, loggers, video_dir, json_dir
