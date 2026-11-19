@@ -28,15 +28,19 @@ def _build_params(config_path: str) -> tuple[RuntimeParams, object]:
     )
     return params, config
 
-
 def main() -> None:
-    config_path = str(Path("configs/detr.yaml"))
+    config_path = str(Path("configs/rtdetr_r101.yaml"))
     params, config = _build_params(config_path)
+    
+    start_time = time.time()
     batch = asyncio.run(run(params, config))
+    elapsed = time.time() - start_time
+    
     print("result:")
     print(f"  success: {batch.success_count}")
     print(f"  failed: {batch.failed_count}")
     print(f"  errors: {len(batch.errors)}")
+    print(f"  time: {elapsed:.2f}s")
 
 
 if __name__ == "__main__":

@@ -6,11 +6,14 @@ from src.detectors.detr import DetrDetector
 from src.detectors.yolo import YoloDetector
 from src.trackers.botsort import BotSortTracker
 from src.trackers.iou import IouTracker
+from src.detectors.rtdetr import RtDetrDetector
 
 
 def _build_single_detector(name: str, params: dict):
     if name == "yolo":
         return YoloDetector(**params)
+    if name == "rtdetr":
+        return RtDetrDetector(**params)    
     if name == "detr":
         return DetrDetector(**params)
     raise ValueError(f"unknown detector: {name}")

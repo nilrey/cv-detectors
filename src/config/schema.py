@@ -39,6 +39,8 @@ class DrawingConfig(BaseModel):
     show_bbox: bool = True
     show_roi: bool = False
     show_label: bool = True
+    box_thickness: int = 1
+    font_scale: float = 1.0
     colors: dict[str, list[int]] = Field(
         default_factory=lambda: {
             "bbox": [0, 255, 0],
@@ -46,6 +48,7 @@ class DrawingConfig(BaseModel):
             "label": [255, 255, 255],
         }
     )
+    class_colors: dict[str, list[int]] = Field(default_factory=dict)
 
 
 class PipelineConfig(BaseModel):

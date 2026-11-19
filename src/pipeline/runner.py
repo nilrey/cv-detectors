@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from datetime import datetime, timezone
 from pathlib import Path
+import json
 
 from src.config.schema import AppConfig, RuntimeParams
 from src.domain.models import BatchResult, FrameResult, VideoResult
@@ -208,4 +209,11 @@ async def run(params: RuntimeParams, config: AppConfig) -> BatchResult:
         lg.finalize()
     _log(f"batch done: success={batch.success_count} failed={batch.failed_count}")
     _log("-" * 40)
+
+    excluded = getattr(detector, "_excluded", None)
+    if excluded:
+        path = log_dir / "excluded_classes.json"
+        with path.open("w", encoding="utf-8") as f:
+            json.dump(sorted(excluded), f, ensure_ascii=False, indent=2)    
+
     return batch
