@@ -38,7 +38,7 @@ drawing:
   show_roi: false
   show_label: true
   box_thickness: 1
-  font_scale: 1
+  font_scale: 0.5
   colors:
     bbox: [0, 255, 0]
     roi: [255, 128, 0]

@@ -30,7 +30,7 @@ def _build_params(config_path: str) -> tuple[RuntimeParams, object]:
     return params, config
 
 def main() -> None:
-    config_path = str(Path("configs/rtdetr_r101.yaml"))
+    config_path = str(Path("configs/rtdetr_r18vd.yaml"))
     params, config = _build_params(config_path)
     
     start_time = time.time()

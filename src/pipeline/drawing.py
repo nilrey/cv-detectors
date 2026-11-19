@@ -43,7 +43,7 @@ def _draw_track(
     cv2.rectangle(frame, (x1, y1), (x2, y2), bbox_color, cfg.box_thickness)
     if not cfg.show_label:
         return
-    text = f"{track.class_name} #{track.track_id} : {track.score:.2f}"
+    text = f"{track.class_name} #{track.track_id}:{track.score:.2f}"
     (tw, th), _ = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, cfg.font_scale, 1)
     
     # фон подписи - цвет класса
