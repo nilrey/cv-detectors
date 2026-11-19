@@ -45,6 +45,7 @@ class RtDetrDetector:
     def _infer(self, frame: np.ndarray) -> DetectorOutput:
         import torch
         from PIL import Image
+        from torchvision.ops import nms
 
         image = Image.fromarray(frame[:, :, ::-1])
         inputs = self._processor(images=image, return_tensors="pt").to(self.device)
@@ -54,10 +55,22 @@ class RtDetrDetector:
         results = self._processor.post_process_object_detection(
             outputs, target_sizes=target_sizes, threshold=self.threshold
         )[0]
+
+        boxes = results["boxes"]
+        scores = results["scores"]
+        labels = results["labels"]
+
+        keep = nms(boxes, scores, iou_threshold=0.5)
+
         detections: list[Detection] = []
-        for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
+        for idx in keep:
+            score = scores[idx]
+            label = labels[idx]
+            box = boxes[idx]
+            
             cls_id = int(label.item())
             native_name = COCO_ID_TO_NAME.get(cls_id, str(cls_id))
+            
             if self._map:
                 target = self._map.get(cls_id)
                 if target is None:
@@ -66,6 +79,7 @@ class RtDetrDetector:
                 cls_name = target
             else:
                 cls_name = native_name
+                
             detections.append(
                 Detection(
                     bbox=tuple(float(x) for x in box.tolist()),

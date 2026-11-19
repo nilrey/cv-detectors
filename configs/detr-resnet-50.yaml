@@ -1,12 +1,15 @@
-# Res-DETR settings
 detector:
   name: detr
   params:
     weights: facebook/detr-resnet-50
     device: auto
     threshold: 0.5
+    class_map:
+      1: person
+      3: car
+      6: car
+      8: car
 
-# Res-DETR settings
 tracker:
   name: iou
   params:
@@ -14,8 +17,7 @@ tracker:
     max_age: 30
     min_hits: 1
 
-
-classes: []  # пусто = все COCO
+classes: []
 
 input:
   source: null
@@ -35,13 +37,19 @@ drawing:
   show_bbox: true
   show_roi: false
   show_label: true
+  box_thickness: 1
+  font_scale: 0.5
   colors:
     bbox: [0, 255, 0]
     roi: [255, 128, 0]
     label: [255, 255, 255]
+  class_colors:
+    person: [255, 128, 0]
+    car: [0, 255, 0]
 
 pipeline:
   save_video: true
   save_json: true
   save_jsonl: true
   json_format: full
+

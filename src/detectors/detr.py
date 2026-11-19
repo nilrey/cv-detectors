@@ -13,10 +13,18 @@ class DetrDetector:
     name = "detr"
     class_map = COCO_ID_TO_NAME
 
-    def __init__(self, weights: str = "facebook/detr-resnet-50", device: str = "auto", threshold: float = 0.5):
+    def __init__(
+        self, 
+        weights: str = "facebook/detr-resnet-50", 
+        device: str = "auto", 
+        threshold: float = 0.5,
+        class_map: dict[int, str] | None = None,
+    ):
         self.weights = weights
         self.device = device
         self.threshold = threshold
+        self._map = class_map
+        self._excluded: set[str] = set()
         self._processor = None
         self._model = None
 
@@ -35,6 +43,7 @@ class DetrDetector:
     def _infer(self, frame: np.ndarray) -> DetectorOutput:
         import torch
         from PIL import Image
+        from torchvision.ops import nms
 
         image = Image.fromarray(frame[:, :, ::-1])
         inputs = self._processor(images=image, return_tensors="pt").to(self.device)
@@ -44,15 +53,37 @@ class DetrDetector:
         results = self._processor.post_process_object_detection(
             outputs, target_sizes=target_sizes, threshold=self.threshold
         )[0]
+
+        boxes = results["boxes"]
+        scores = results["scores"]
+        labels = results["labels"]
+
+        keep = nms(boxes, scores, iou_threshold=0.5)
+
         detections: list[Detection] = []
-        for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
+        for idx in keep:
+            score = scores[idx]
+            label = labels[idx]
+            box = boxes[idx]
+            
             cls_id = int(label.item())
+            native_name = COCO_ID_TO_NAME.get(cls_id, str(cls_id))
+            
+            if self._map:
+                target = self._map.get(cls_id)
+                if target is None:
+                    self._excluded.add(native_name)
+                    continue
+                cls_name = target
+            else:
+                cls_name = native_name
+                
             detections.append(
                 Detection(
                     bbox=tuple(float(x) for x in box.tolist()),
                     score=float(score.item()),
                     class_id=cls_id,
-                    class_name=COCO_ID_TO_NAME.get(cls_id, str(cls_id)),
+                    class_name=cls_name,
                 )
             )
         return DetectorOutput(detections=detections)

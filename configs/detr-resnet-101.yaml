@@ -1,0 +1,55 @@
+detector:
+  name: detr
+  params:
+    weights: facebook/detr-resnet-101
+    device: auto
+    threshold: 0.5
+    class_map:
+      1: person
+      3: car
+      6: car
+      8: car
+
+tracker:
+  name: iou
+  params:
+    iou_threshold: 0.3
+    max_age: 30
+    min_hits: 1
+
+classes: []
+
+input:
+  source: null
+
+output:
+  base_dir: data/output
+  video_dir: outputs/video
+  json_dir: outputs/json
+
+logging:
+  local: true
+  clearml:
+    enabled: false
+    project_name: cv-pipeline
+
+drawing:
+  show_bbox: true
+  show_roi: false
+  show_label: true
+  box_thickness: 1
+  font_scale: 0.5
+  colors:
+    bbox: [0, 255, 0]
+    roi: [255, 128, 0]
+    label: [255, 255, 255]
+  class_colors:
+    person: [255, 128, 0]
+    car: [0, 255, 0]
+
+pipeline:
+  save_video: true
+  save_json: true
+  save_jsonl: true
+  json_format: full
+
