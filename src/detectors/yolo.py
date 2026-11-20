@@ -42,6 +42,7 @@ class YoloDetector:
             r = results[0]
             boxes = getattr(r, "boxes", None)
             if boxes is not None:
+                names = getattr(self._model, "names", None) or COCO_ID_TO_NAME
                 for b in boxes:
                     xyxy = b.xyxy[0].tolist()
                     cls_id = int(b.cls[0].item())
@@ -51,7 +52,7 @@ class YoloDetector:
                             bbox=(xyxy[0], xyxy[1], xyxy[2], xyxy[3]),
                             score=score,
                             class_id=cls_id,
-                            class_name=COCO_ID_TO_NAME.get(cls_id, str(cls_id)),
+                            class_name=names.get(cls_id, str(cls_id)),
                         )
                     )
         return DetectorOutput(detections=detections)

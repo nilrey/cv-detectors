@@ -15,7 +15,6 @@ class BotSortTracker:
         self._impl = None
         self._known: dict[int, Track] = {}
 
-
     def _build(self):
         from boxmot import create_tracker, BotSortConfig
         from boxmot.reid import create_reid_encoder
@@ -41,7 +40,7 @@ class BotSortTracker:
             "osnet-x0-25-msmt17",
             device="cpu",
             allow_download=False,
-            options={"model_path": str(reid_path)},  
+            options={"model_path": str(reid_path)},
         )
 
         return create_tracker(
@@ -69,6 +68,9 @@ class BotSortTracker:
             )
         else:
             arr = np.empty((0, 6), dtype=np.float32)
+
+        det_cls_name = {d.class_id: d.class_name for d in detections}
+
         tracks = await asyncio.to_thread(self._impl.update, arr, frame)
         result: list[Track] = []
         for row in tracks:
@@ -77,7 +79,7 @@ class BotSortTracker:
             score = float(row[5]) if len(row) > 5 else 1.0
             cls_id = int(row[6]) if len(row) > 6 else 0
             prev = self._known.get(tid)
-            class_name = prev.class_name if prev else str(cls_id)
+            class_name = det_cls_name.get(cls_id) or (prev.class_name if prev else str(cls_id))
             tr = Track(
                 track_id=tid,
                 bbox=(x1, y1, x2, y2),
