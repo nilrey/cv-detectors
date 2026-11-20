@@ -1,7 +1,7 @@
 detector:
   name: yolo
   params:
-    weights: weights/yolo/yolov8x.pt
+    weights: weights/yolo/yolo12n.pt
     device: auto
     conf: 0.25
     iou: 0.5
@@ -39,10 +39,15 @@ drawing:
   show_bbox: true
   show_roi: false
   show_label: true
+  box_thickness: 1
+  font_scale: 0.5
   colors:
     bbox: [0, 255, 0]
     roi: [255, 128, 0]
     label: [255, 255, 255]
+  class_colors:
+    person: [255, 128, 0]
+    car: [0, 255, 0]  
 
 pipeline:
   save_video: true

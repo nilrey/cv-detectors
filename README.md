@@ -45,3 +45,24 @@ DETR + BoT-SORT, YOLO + ClearML, DeepLab + YOLO + IoU, а также каска�
 pip install -r requirements.txt
 python main.py
 ```
+
+## Запуск выбранной модели
+
+перечень моделей с их конфигами в папке ./configs 
+
+запустить соответствющую модель в main.py, указав конфиг файл модели. Пример:
+
+```bash
+config_path = str(Path("configs/rtdetr_r18vd.yaml"))
+```
+
+## Синхронизация jsonl от модели с эталоном
+
+```bash
+python -m scripts.sync_dets
+```
+
+## Залить полученные синхронизированные json в ClearML
+```bash
+python -m scripts.report_clearml
+```
