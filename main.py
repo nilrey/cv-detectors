@@ -13,7 +13,7 @@ def _build_params(config_path: str) -> tuple[RuntimeParams, object]:
     config = load_config(config_path)
     params = RuntimeParams(
         source=[
-            "data/input/spb-10-sec.mp4",
+            "data/input/spb_gostiny_dvor_001.mp4",
         ],
         output_name="default_run",
         run_id="run_001",
@@ -30,7 +30,7 @@ def _build_params(config_path: str) -> tuple[RuntimeParams, object]:
     return params, config
 
 def main() -> None:
-    config_path = str(Path("configs/detr-resnet-50.yaml"))
+    config_path = str(Path("configs/rtdetr_r18vd.yaml"))
     params, config = _build_params(config_path)
     
     start_time = time.time()

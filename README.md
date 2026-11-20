@@ -44,3 +44,4 @@ DETR + BoT-SORT, YOLO + ClearML, DeepLab + YOLO + IoU, а также каска�
 ```bash
 pip install -r requirements.txt
 python main.py
+```
