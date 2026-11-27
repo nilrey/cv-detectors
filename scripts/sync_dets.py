@@ -8,7 +8,7 @@ from src.eval.sync import sync
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--ref", default="data/sync/reference/annotation_gostinny_dvor_001_completed.json")
-    p.add_argument("--det", default="data/sync/input/spb_gostiny_dvor_001.jsonl")
+    p.add_argument("--det", default="data/sync/input/spb_22.jsonl")
     p.add_argument("--out", default="data/sync/results")
     args = p.parse_args()
 

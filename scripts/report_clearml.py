@@ -14,7 +14,7 @@ def main() -> None:
     p.add_argument("--sync", default="data/sync/results/sync.jsonl")
     p.add_argument("--out", default="data/sync/results/report")
     p.add_argument("--project", default="Синхронизированная разметка")
-    p.add_argument("--task", default="RT-DETR r18vd")
+    p.add_argument("--task", default="Yolo 12n")
     args = p.parse_args()
 
     out_dir = Path(args.out)

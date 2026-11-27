@@ -13,7 +13,7 @@ def _build_params(config_path: str) -> tuple[RuntimeParams, object]:
     config = load_config(config_path)
     params = RuntimeParams(
         source=[
-            "data/input/spb_gostiny_dvor_001.mp4",
+            "data/input/spb-22.mp4",
         ],
         output_name="default_run",
         run_id="run_001",
